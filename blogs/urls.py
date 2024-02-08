@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.urls import include, path
-from django.contrib.flatpages import views
+
+handler400 = 'blogs.views.page_bad_request'
+handler404 = 'blogs.views.page_not_found'
+handler500 = 'blogs.views.server_error'
 
 
 urlpatterns = [
@@ -9,9 +12,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-        path('about-us/', views.flatpage, {'url': '/about-us/'}, name='about'),
-        path('terms/', views.flatpage, {'url': '/terms/'}, name='terms'),
-        path('about-author/', views.flatpage, {'url': '/about-author/'}, name='about-author'),
-        path('about-spec/', views.flatpage, {'url': '/about-spec/'}, name='about-spec'),
         path('', include('blog.urls')),
+        path('api/', include('api.urls')),
+        path('upload/', include('upload.urls')),
 ]

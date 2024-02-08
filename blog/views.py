@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -27,6 +27,7 @@ class OnlyLoggedUserMixin:
 class NewsFeed(OnlyLoggedUserMixin, ListView):
     template_name = 'blog/index.html'
     model = Follow
+    paginate_by = settings.PAGINATION_PAGE_SIZE
     context_object_name = 'posts'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -41,7 +42,7 @@ class NewsFeed(OnlyLoggedUserMixin, ListView):
                 user__in=[
                     subscribe.author_blog.pk for subscribe in subscriptions
                 ]
-            )
+            )[:501]
 
 
 class ReadPosts(OnlyLoggedUserMixin, View):
@@ -126,7 +127,7 @@ class UpdatePost(OnlyLoggedUserMixin, AutoFieldForUserMixin, UpdateView):
         return context
 
 
-class DeletePost(OnlyLoggedUserMixin, AutoFieldForUserMixin, DeleteView):
+class DeletePost(OnlyLoggedUserMixin, DeleteView):
     template_name = 'blog/delete_post.html'
     model = Post
     success_url = reverse_lazy('user-posts')

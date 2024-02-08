@@ -5,10 +5,10 @@ User = get_user_model()
 
 
 class Post(models.Model):
-    title = models.CharField(verbose_name='Заголовок', max_length=200, null=False)
+    title = models.CharField(verbose_name='Заголовок', max_length=30, null=False)
     text = models.TextField(verbose_name='Текст', max_length=140)
-    created = models.DateTimeField(verbose_name='Создан', auto_now_add=True, null=True)
-    updated = models.DateTimeField(verbose_name='Обновлен', auto_now=True)
+    created = models.DateTimeField(verbose_name='Создан', auto_now_add=True, db_index=True)
+    updated = models.DateTimeField(verbose_name='Обновлен', auto_now=True, db_index=True)
     user = models.ForeignKey(
         User, verbose_name='Пользователь', on_delete=models.CASCADE, null=True
     )
