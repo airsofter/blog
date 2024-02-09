@@ -5,12 +5,24 @@ User = get_user_model()
 
 
 class Post(models.Model):
-    title = models.CharField(verbose_name='Заголовок', max_length=30, null=False)
+    title = models.CharField(
+        verbose_name='Заголовок',
+        max_length=30, null=False
+    )
     text = models.TextField(verbose_name='Текст', max_length=140)
-    created = models.DateTimeField(verbose_name='Создан', auto_now_add=True, db_index=True)
-    updated = models.DateTimeField(verbose_name='Обновлен', auto_now=True, db_index=True)
+    created = models.DateTimeField(
+        verbose_name='Создан',
+        auto_now_add=True,
+        db_index=True
+    )
+    updated = models.DateTimeField(
+        verbose_name='Обновлен',
+        auto_now=True,
+        db_index=True
+    )
     user = models.ForeignKey(
-        User, verbose_name='Пользователь', on_delete=models.CASCADE, null=True
+        User, verbose_name='Пользователь',
+        on_delete=models.CASCADE
     )
 
     def __str__(self):
@@ -26,7 +38,8 @@ class Post(models.Model):
 
 class Follow(models.Model):
     user = models.ForeignKey(
-        User, verbose_name='Пользователь', on_delete=models.CASCADE
+        User, verbose_name='Пользователь',
+        on_delete=models.CASCADE
     )
     author_blog = models.ForeignKey(
         User, verbose_name='Чей блог',
@@ -46,10 +59,12 @@ class Follow(models.Model):
 
 class ReadPost(models.Model):
     user = models.ForeignKey(
-        User, verbose_name='Пользователь', on_delete=models.CASCADE
+        User, verbose_name='Пользователь',
+        on_delete=models.CASCADE
     )
     post = models.ForeignKey(
-        Post, verbose_name='Прочитал пост', on_delete=models.CASCADE,
+        Post, verbose_name='Прочитал пост',
+        on_delete=models.CASCADE,
     )
 
     def __str__(self):

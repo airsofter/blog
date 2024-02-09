@@ -4,8 +4,8 @@ from django.conf import settings
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import ListView, UpdateView, CreateView, \
-    DetailView, DeleteView
+from django.views.generic import ListView, UpdateView, CreateView
+from django.views.generic import DetailView, DeleteView
 
 from .models import Follow, Post, ReadPost
 
@@ -60,7 +60,11 @@ class ReadPosts(OnlyLoggedUserMixin, View):
         return HttpResponseRedirect(reverse_lazy('news-feed'))
 
 
-class CreatePost(OnlyLoggedUserMixin, AutoFieldForUserMixin, CreateView):
+class CreatePost(
+    OnlyLoggedUserMixin,
+    AutoFieldForUserMixin,
+    CreateView
+):
     template_name = 'blog/new.html'
     model = Post
     fields = ['title', 'text']
@@ -115,7 +119,11 @@ class SubscribeBlog(OnlyLoggedUserMixin, CreateView):
             return self.model.objects.filter(user=self.request.user)
 
 
-class UpdatePost(OnlyLoggedUserMixin, AutoFieldForUserMixin, UpdateView):
+class UpdatePost(
+    OnlyLoggedUserMixin,
+    AutoFieldForUserMixin,
+    UpdateView
+):
     template_name = 'blog/update_post.html'
     model = Post
     fields = ['title', 'text']

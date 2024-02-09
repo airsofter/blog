@@ -1,5 +1,5 @@
-import json
 import os
+import json
 
 from django.contrib.auth import get_user_model
 from django.conf import settings
@@ -40,11 +40,6 @@ class Command(BaseCommand):
                     email='silverdragon23@mail.com',
                     password='Dr@gonFire987')
 
-                get_user_model().objects.create_user(
-                    username='mystic_galaxy',
-                    email='mystic_galaxy55@gmail.com',
-                    password='Starlight#2024')
-
                 self.syncdb()
         except Exception as e:
             print(e)
@@ -60,7 +55,7 @@ class Command(BaseCommand):
                 post['fields']['user'] = _user
 
                 new_publication = Post(**{'id': post['pk']},
-                                           **post['fields'])
+                                       **post['fields'])
                 new_publication.save()
 
             self.reset_sequences()
